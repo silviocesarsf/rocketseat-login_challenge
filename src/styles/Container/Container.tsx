@@ -9,6 +9,7 @@ interface ContainerProps {
 	gap?: string;
 	flexDirection?: string;
 	padding?: string;
+	as?: keyof JSX.IntrinsicElements;
 }
 
 export const Container = styled.div<ContainerProps>`

@@ -5,11 +5,23 @@ import { Typography } from "../../styles/Typography/Typography";
 import { Input } from "../../styles/Inputs/Input";
 import { Button } from "../../styles/Inputs/Button";
 import logo from "../../assets/logo.svg";
-import { useMediaQuery } from "react-responsive";
+import { useForm } from "react-hook-form";
 
 const Login: React.FC = () => {
-	// const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<UserData>();
 
+	interface UserData {
+		email: string;
+		password: string;
+	}
+
+	const createUser = (data: UserData) => {
+		console.log(data);
+	};
 	return (
 		<Container justify="space-between" width="100%">
 			<Container
@@ -23,12 +35,14 @@ const Login: React.FC = () => {
 					gap="20px"
 					padding="1rem"
 					className="form-container"
+					as={"form"}
+					onSubmit={handleSubmit(createUser)}
 				>
 					<div className="logo">
 						<img
 							style={{ position: "absolute", top: "5%" }}
 							src={logo}
-							alt=""
+							alt="Logo da Vertigo"
 						/>
 					</div>
 					<Container
@@ -64,7 +78,23 @@ const Login: React.FC = () => {
 					>
 						E-mail
 					</Typography>
-					<Input type="email" placeholder="Digite seu email" />
+					<Input
+						type="email"
+						placeholder="Digite seu email"
+						style={{
+							border: errors.email && "1px solid red",
+						}}
+						{...register("email", {
+							required: true,
+							pattern:
+								/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+						})}
+					/>
+					{errors.email && (
+						<span style={{ color: "red" }}>
+							Digite um email valido
+						</span>
+					)}
 					<Container justify="space-between" width="100%">
 						<Typography
 							as="label"
@@ -85,8 +115,21 @@ const Login: React.FC = () => {
 					<Input
 						type="password"
 						placeholder="Digite sua senha"
+						style={{
+							border: errors.password && "1px solid red",
+						}}
+						{...register("password", {
+							required: true,
+							minLength: 4,
+						})}
 					/>
-					<Button>Entrar</Button>
+					{errors.password && (
+						<span style={{ color: "red" }}>
+							Digite uma senha valida
+						</span>
+					)}
+
+					<Button type="submit">Entrar</Button>
 					<Container justify="left" gap="5px">
 						<Typography
 							color={(props: any) =>

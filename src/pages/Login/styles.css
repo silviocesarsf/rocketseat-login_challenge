@@ -1,0 +1,40 @@
+.left-container {
+	height: 100vh;
+	width: 50%;
+}
+
+.background-image {
+	width: 50%;
+	height: 100vh;
+	background-image: url("../../assets//background.png");
+	background-size: cover;
+	background-position: center;
+}
+
+.form-container {
+	width: 384px;
+}
+
+/* Responsivity */
+
+@media (max-width: 768px) {
+	.left-container {
+		width: 100%;
+	}
+
+	.background-image {
+		display: none;
+	}
+}
+
+@media (max-width: 400px) {
+	.form-container {
+		width: 340px;
+	}
+}
+
+@media (max-width: 360px) {
+	.form-container {
+		width: 320px;
+	}
+}
